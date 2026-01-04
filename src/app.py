@@ -62,6 +62,10 @@ def add_member():
     return jsonify({"message": "Miembro agregado"}), 200
 
 
+@app.route('/members/<int:member_id>', methods=['DELETE'])
+def delete_member(member_id):
+    result = jackson_family.delete_member(member_id)
+
 
 # This only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':

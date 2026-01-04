@@ -33,20 +33,19 @@ class FamilyStructure:
             }
         ]
 
-    # This method generates a unique incremental ID
     def _generate_id(self):
         generated_id = self._next_id
         self._next_id += 1
         return generated_id
 
     def add_member(self, member):
-        # Aseguramos que el last_name siempre sea "Jackson"
+        # Forzar last_name = Jackson
         member["last_name"] = self.last_name
-        # Si no tiene id, le generamos uno
-        if "id" not in member:
+        # Asignar id si no lo tiene
+        if "id" not in member or member["id"] is None:
             member["id"] = self._generate_id()
         self._members.append(member)
-        return member
+        return member  # ✅ ¡RETORNAR EL MIEMBRO!
 
     def delete_member(self, id):
         for member in self._members:

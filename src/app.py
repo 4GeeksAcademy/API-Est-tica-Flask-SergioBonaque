@@ -35,7 +35,7 @@ def get_one_member(member_id):
     member = jackson_family.get_member(member_id)
     if member is None:
         return jsonify({"error": "Miembro no encontrado"}), 404
-    # ✅ NO incluir last_name en la respuesta (según especificación)
+   
     return jsonify({
         "id": member["id"],
         "first_name": member["first_name"],
@@ -54,7 +54,6 @@ def add_member():
     if body["age"] <= 0:
         return jsonify({"error": "La edad debe ser mayor que 0"}), 400
 
-    # ✅ Agregar y devolver el miembro (con id generado)
     new_member = jackson_family.add_member(body)
     return jsonify(new_member), 200
 

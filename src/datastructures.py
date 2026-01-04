@@ -45,7 +45,7 @@ class FamilyStructure:
         if "id" not in member or member["id"] is None:
             member["id"] = self._generate_id()
         self._members.append(member)
-        return member  # ✅ ¡RETORNAR EL MIEMBRO!
+        return member  
 
     def delete_member(self, id):
         for member in self._members:

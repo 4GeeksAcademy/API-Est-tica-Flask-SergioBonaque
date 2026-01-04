@@ -46,6 +46,7 @@ class FamilyStructure:
         if "id" not in member:
             member["id"] = self._generate_id()
         self._members.append(member)
+        return member
 
     def delete_member(self, id):
         # Recorremos la lista y eliminamos al miembro con ese id

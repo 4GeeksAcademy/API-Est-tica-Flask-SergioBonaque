@@ -8,7 +8,6 @@ from utils import APIException, generate_sitemap
 from datastructures import FamilyStructure
 # from models import Person
 
-
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 CORS(app)
@@ -17,10 +16,14 @@ CORS(app)
 jackson_family = FamilyStructure("Jackson")
 
 
-# Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
+
+
+@app.route('/')
+def sitemap():
+    return jsonify({"message": "API de la familia Jackson"})
 
 
 # Generate sitemap with all your endpoints

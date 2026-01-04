@@ -2,11 +2,10 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
-from flask import Flask, request, jsonify, url_for
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from utils import APIException, generate_sitemap
+from utils import APIException
 from datastructures import FamilyStructure
-# from models import Person
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -26,7 +25,6 @@ def sitemap():
     return jsonify({"message": "API de la familia Jackson"})
 
 
-# Generate sitemap with all your endpoints
 @app.route('/members', methods=['GET'])
 def get_all_members():
     members = jackson_family.get_all_members()
@@ -38,7 +36,7 @@ def get_one_member(member_id):
     member = jackson_family.get_member(member_id)
     if member is None:
         return jsonify({"error": "Miembro no encontrado"}), 404
-    # Quitamos last_name de la respuesta como piden las instrucciones
+    # Según las instrucciones, el last_name NO debe aparecer en la respuesta
     response = {
         "id": member["id"],
         "first_name": member["first_name"],
@@ -58,17 +56,16 @@ def add_member():
     if body["age"] <= 0:
         return jsonify({"error": "La edad debe ser mayor que 0"}), 400
 
-    jackson_family.add_member(body)
+    jackson_family.add_member(body)  # No esperamos retorno
     return jsonify({"message": "Miembro agregado"}), 200
 
 
 @app.route('/members/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
-    result = jackson_family.delete_member(member_id)
-if not result:
+    success = jackson_family.delete_member(member_id)
+    if not success:
         return jsonify({"error": "Miembro no encontrado"}), 404
     return jsonify({"done": True}), 200
-
 
 
 # This only runs if `$ python src/app.py` is executed

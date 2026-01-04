@@ -40,16 +40,15 @@ class FamilyStructure:
         return generated_id
 
     def add_member(self, member):
-        # Añadimos el last_name porque siempre debe ser "Jackson"
+        # Aseguramos que el last_name siempre sea "Jackson"
         member["last_name"] = self.last_name
-        # Si no trae id, generamos uno
+        # Si no tiene id, le generamos uno
         if "id" not in member:
             member["id"] = self._generate_id()
         self._members.append(member)
         return member
 
     def delete_member(self, id):
-        # Recorremos la lista y eliminamos al miembro con ese id
         for member in self._members:
             if member["id"] == id:
                 self._members.remove(member)
@@ -57,12 +56,10 @@ class FamilyStructure:
         return False
 
     def get_member(self, id):
-        # Buscamos el miembro por su id
         for member in self._members:
             if member["id"] == id:
                 return member
         return None
 
-    # This method is done, it returns a list with all the family members
     def get_all_members(self):
         return self._members

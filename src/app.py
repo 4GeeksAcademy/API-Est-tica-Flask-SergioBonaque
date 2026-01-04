@@ -48,6 +48,20 @@ def get_one_member(member_id):
     return jsonify(response), 200
 
 
+@app.route('/members', methods=['POST'])
+def add_member():
+    body = request.get_json()
+    if not body:
+        return jsonify({"error": "El cuerpo de la solicitud está vacío"}), 400
+    if "first_name" not in body or "age" not in body or "lucky_numbers" not in body:
+        return jsonify({"error": "Faltan campos obligatorios"}), 400
+    if body["age"] <= 0:
+        return jsonify({"error": "La edad debe ser mayor que 0"}), 400
+
+    jackson_family.add_member(body)
+    return jsonify({"message": "Miembro agregado"}), 200
+
+
 
 # This only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
